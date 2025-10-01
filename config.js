@@ -20,9 +20,9 @@ const MAX_RECONNECT_ATTEMPTS = parseInt(
 );
 const VERSION = require("./package.json").version;
 const DATABASE_URL =
-  process.env.DATABASE_URL === undefined
-    ? "./bot.db"
-    : process.env.DATABASE_URL;
+  process.env.DATABASE_URL && process.env.DATABASE_URL.trim() !== ""
+    ? process.env.DATABASE_URL
+    : "./bot.db";
 const DEBUG =
   process.env.DEBUG === undefined ? false : convertToBool(process.env.DEBUG);
 
@@ -37,10 +37,12 @@ const sequelize =
           max: 3,
         },
       })
-    : new Sequelize(DATABASE_URL, ({
+    : new Sequelize(DATABASE_URL, {
         dialectOptions: { ssl: { require: true, rejectUnauthorized: false } },
         logging: DEBUG,
       });
+
+console.log("DATABASE_URL:", DATABASE_URL);
 
 const SESSION_STRING = process.env.SESSION || process.env.SESSION_ID;
 
@@ -283,3 +285,4 @@ Object.defineProperty(config, "debug", {
 });
 
 module.exports = config;
+
