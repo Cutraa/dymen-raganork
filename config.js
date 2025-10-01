@@ -2,7 +2,8 @@ const P = require("pino");
 const fs = require("fs");
 const { Sequelize } = require("sequelize");
 
-function convertToBool(text, fault = "true", fault2 = "on") {
+function convertToBool(text, fault = "true", fault2 = "on")
+{
   return text === fault || text === fault2;
 }
 
@@ -36,7 +37,7 @@ const sequelize =
           max: 3,
         },
       })
-    : new Sequelize(DATABASE_URL, {
+    : new Sequelize(DATABASE_URL, ({
         dialectOptions: { ssl: { require: true, rejectUnauthorized: false } },
         logging: DEBUG,
       });
