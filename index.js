@@ -13,7 +13,6 @@ const { BotManager } = require("./core/manager");
 const config = require("./config");
 const { SESSION, logger } = config;
 const http = require("http");
-
 async function main() {
   if (!fs.existsSync("./temp")) {
     fs.mkdirSync("./temp", { recursive: true });
